@@ -1,0 +1,4 @@
+Flask>=0.10.1
+leancloud-sdk>=1.0.9
+requests>=0.1
+pyyaml>=0.1
