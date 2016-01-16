@@ -1,7 +1,7 @@
 client_id: "C-nXEM3hTPqgy2kJpVO8hMIh6WqrZCMl"
 client_secret: "lOlOLUGjxp641p8RwSQuH3uMXoi8ETujx7FUPMfY"
-redirect_url_prd: "http://pkurider.leanapp.cn/oauth"
-redirect_url: "http://localhost:3000/oauth"
+redirect_url: "https://pkurider.leanapp.cn/oauth"
+#redirect_url: "http://localhost:3000/oauth"
 scopes:
     - profile
     - history
