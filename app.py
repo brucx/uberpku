@@ -87,6 +87,19 @@ def history():
     return str(reslut)
 
 
+@app.route('/plan', methods=["POST", "GET"])
+def plan():
+    if request.method == "POST":
+        uuid = request.form["uid"]
+        budget_money = request.form["budget_money"]
+        budget_cal = request.form["budget_cal"]
+
+        #api.set_activity(uuid,"MONTH",budget_money,budget_cal)
+        return uuid+" " +budget_money+" "+budget_cal+"\n"
+
+    else:
+        return "GET /plan under construction"
+
 def get_client_by_uid(uid):
     token = api.get_token(uid)
     oauth2credential = OAuth2Credential(
