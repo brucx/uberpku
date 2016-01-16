@@ -218,22 +218,22 @@ class AuthorizationCodeGrant(OAuth2):
         error_message = None
 
         # Check CSRF State Token against returned state token from GET request
-        received_state_token = query_params.get('state')
-        if received_state_token is None:
-            error_message = 'Bad Request. Missing state parameter.'
-            raise UberIllegalState(error_message)
-
-        if self.state_token is None:
-            error_message = 'Missing CSRF State Token in session.'
-            raise UberIllegalState(error_message)
-
-        if self.state_token != received_state_token:
-            error_message = 'CSRF Error. Expected {}, got {}'
-            error_message = error_message.format(
-                self.state_token,
-                received_state_token,
-            )
-            raise UberIllegalState(error_message)
+        # received_state_token = query_params.get('state')
+        # if received_state_token is None:
+        #     error_message = 'Bad Request. Missing state parameter.'
+        #     raise UberIllegalState(error_message)
+        #
+        # if self.state_token is None:
+        #     error_message = 'Missing CSRF State Token in session.'
+        #     raise UberIllegalState(error_message)
+        #
+        # if self.state_token != received_state_token:
+        #     error_message = 'CSRF Error. Expected {}, got {}'
+        #     error_message = error_message.format(
+        #         self.state_token,
+        #         received_state_token,
+        #     )
+        #     raise UberIllegalState(error_message)
 
         # Verify either 'code' or 'error' parameter exists
         error = query_params.get('error')
