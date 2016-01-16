@@ -65,12 +65,38 @@ def set_activity(uid, month, money, calories):
 		# todo: duration, time!
 		entry.save()
 	else:
-		query.equal_to("uid", uid)
-		query.equal_to("start_time", month)
 		entry = query.first()
 		entry.set("budget_money", money)
 		entry.set("budget_cal", calories)
 		entry.save()
+
+def update_uber(uid, month, money, time, calories=0):
+	query = Query(Activity)
+	query.equal_to("uid", uid)
+	query.equal_to("start_time", month)
+	if query.count() == 0:
+		return false
+	else:
+		entry = query.first()
+		entry.increment("curr_money", money)
+		entry.increment("curr_time", time)
+		entry.increment("curr_cal", calories)
+		entry.increment("curr_ubers", 1)
+		return true
+
+def update_nouber(uid, month, money=0, time, calories):
+	query = Query(Activity)
+	query.equal_to("uid", uid)
+	query.equal_to("start_time", month)
+	if query.count() == 0:
+		return false
+	else:
+		entry = query.first()
+		entry.increment("curr_money", money)
+		entry.increment("curr_time", time)
+		entry.increment("curr_cal", calories)
+		return true
+
 
 Schedule = Object.extend("schedule")
 
