@@ -19,10 +19,13 @@
 # THE SOFTWARE.
 
 """Initializes an UberRidesClient with OAuth 2.0 Credentials.
+
 This example demonstrates how to get an access token through the
 OAuth 2.0 Authorization Code Grant and use credentials to create
 an UberRidesClient.
+
 To run this example:
+
     (1) Set your app credentials in config.yaml
     (2) Run `python authorization_code_grant.py`
     (3) A success message will print, 'Hello {YOUR_NAME}'
@@ -52,12 +55,14 @@ from uber_rides.errors import UberIllegalState
 
 def authorization_code_grant_flow(credentials, storage_filename):
     """Get an access token through Authorization Code Grant.
+
     Parameters
         credentials (dict)
             All your app credentials and information
             imported from the configuration file.
         storage_filename (str)
             Filename to store OAuth 2.0 Credentials.
+
     Returns
         (UberRidesClient)
             An UberRidesClient with OAuth 2.0 Credentials.
@@ -105,6 +110,7 @@ def authorization_code_grant_flow(credentials, storage_filename):
 
 def hello_user(api_client):
     """Use an authorized client to fetch and print profile information.
+
     Parameters
         api_client (UberRidesClient)
             An UberRidesClient with OAuth 2.0 credentials.
@@ -128,6 +134,7 @@ def hello_user(api_client):
 
 if __name__ == '__main__':
     """Run the example.
+
     Get an access token through the OAuth 2.0 Authorization Code Grant
     and use credentials to create an UberRidesClient.
     """

@@ -30,10 +30,10 @@ from yaml import safe_load
 
 
 # set your app credentials here
-CREDENTIALS_FILENAME = 'config.yaml'
+CREDENTIALS_FILENAME = 'example/config.yaml'
 
 # where your OAuth 2.0 credentials are stored
-STORAGE_FILENAME = 'oauth2_session_store.yaml'
+STORAGE_FILENAME = 'example/oauth2_session_store.yaml'
 
 DEFAULT_CONFIG_VALUES = frozenset([
     'INSERT_CLIENT_ID_HERE',
@@ -52,6 +52,7 @@ COLORS = Colors(
 
 def success_print(message):
     """Print a message in green text.
+
     Parameters
         message (str)
             Message to print.
@@ -61,6 +62,7 @@ def success_print(message):
 
 def response_print(message):
     """Print a message in blue text.
+
     Parameters
         message (str)
             Message to print.
@@ -70,6 +72,7 @@ def response_print(message):
 
 def fail_print(message):
     """Print a message in red text.
+
     Parameters
         message (str)
             Message to print.
@@ -79,6 +82,7 @@ def fail_print(message):
 
 def paragraph_print(message):
     """Print message with padded newlines.
+
     Parameters
         message (str)
             Message to print.
@@ -89,9 +93,11 @@ def paragraph_print(message):
 
 def import_app_credentials(filename=CREDENTIALS_FILENAME):
     """Import app credentials from configuration file.
+
     Parameters
         filename (str)
             Name of configuration file.
+
     Returns
         credentials (dict)
             All your app credentials and information
@@ -122,9 +128,11 @@ def import_app_credentials(filename=CREDENTIALS_FILENAME):
 
 def import_oauth2_credentials(filename=STORAGE_FILENAME):
     """Import OAuth 2.0 session credentials from storage file.
+
     Parameters
         filename (str)
             Name of storage file.
+
     Returns
         credentials (dict)
             All your app credentials and information

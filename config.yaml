@@ -1,6 +1,0 @@
-client_id: "3NDCJ1RQsGTRzxwGUsn2cWHkj_oWfwmI"
-client_secret: "ywlSvueMUS4QGyeOdgHi_o_wlg2IsrtggjF_4-iU"
-redirect_url: "http://203.195.221.247/oauth"
-scopes:
-    - profile
-    - history

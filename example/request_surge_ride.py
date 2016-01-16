@@ -19,10 +19,13 @@
 # THE SOFTWARE.
 
 """Use an UberRidesClient to request and complete a ride.
+
 This example demonstrates how to use an UberRidesClient to request a ride
 under surge. After successfully requesting a ride, it updates the
 ride status to 'completed' and deactivates surge.
+
 To run this example:
+
     (1) Run `python authorization_code_grant.py` to get OAuth 2.0 Credentials
     (2) Run `python request_surge_ride.py`
     (3) The UberRidesClient will make API calls and print the
@@ -64,9 +67,11 @@ END_LNG = -122.405
 
 def create_uber_client(credentials):
     """Create an UberRidesClient from OAuth 2.0 credentials.
+
     Parameters
         credentials (dict)
             Dictionary of OAuth 2.0 credentials.
+
     Returns
         (UberRidesClient)
             An authorized UberRidesClient to access API resources.
@@ -87,6 +92,7 @@ def create_uber_client(credentials):
 
 def estimate_ride(api_client):
     """Use an UberRidesClient to fetch a ride estimate and print the results.
+
     Parameters
         api_client (UberRidesClient)
             An authorized UberRidesClient to access API resources.
@@ -109,6 +115,7 @@ def estimate_ride(api_client):
 
 def update_surge(api_client, surge_multiplier):
     """Use an UberRidesClient to update surge and print the results.
+
     Parameters
         api_client (UberRidesClient)
             An authorized UberRidesClient to access API resources.
@@ -131,6 +138,7 @@ def update_surge(api_client, surge_multiplier):
 
 def update_ride(api_client, ride_status, ride_id):
     """Use an UberRidesClient to update ride status and print the results.
+
     Parameters
         api_client (UberRidesClient)
             An authorized UberRidesClient to access API resources.
@@ -153,15 +161,19 @@ def update_ride(api_client, ride_status, ride_id):
 
 def request_ride(api_client, surge_confirmation_id=None):
     """Use an UberRidesClient to request a ride and print the results.
+
     If the product has a surge_multiple greater than or equal to 2.0,
     a SurgeError is raised. Confirm surge by visiting the
     surge_confirmation_url and automatically try the request again.
+
     Parameters
         api_client (UberRidesClient)
             An authorized UberRidesClient to access API resources.
         surge_confirmation_id (string)
             Unique identifer received after confirming surge.
+
     Returns
+
     """
     try:
         request = api_client.request_ride(
@@ -199,6 +211,7 @@ def request_ride(api_client, surge_confirmation_id=None):
 
 def get_ride_details(api_client, ride_id):
     """Use an UberRidesClient to update ride status and print the results.
+
     Parameters
         api_client (UberRidesClient)
             An authorized UberRidesClient to access API resources.
@@ -217,6 +230,7 @@ def get_ride_details(api_client, ride_id):
 
 if __name__ == '__main__':
     """Run the example.
+
     Create an UberRidesClient from OAuth 2.0 Credentials, update a sandbox
     product's surge, request and complete a ride.
     """
