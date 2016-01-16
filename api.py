@@ -15,7 +15,6 @@ def get_token(uid):
 
 
 def set_token(uid, token):
-	user = User()
 	query = Query(User)
 	query.equal_to("uid", uid)
 	number = query.count()
@@ -49,7 +48,6 @@ def get_activity(uid, month):
 	return json.dumps(obj)
 
 def set_activity(uid, month, money, calories):
-	activity = Activity()
 	query = Query(Activity)
 	query.equal_to("uid", uid)
 	query.equal_to("start_time", month)
@@ -67,12 +65,70 @@ def set_activity(uid, month, money, calories):
 		# todo: duration, time!
 		entry.save()
 	else:
-		query.equal_to("uid", uid)
-		query.equal_to("start_time", month)
 		entry = query.first()
 		entry.set("budget_money", money)
 		entry.set("budget_cal", calories)
 		entry.save()
+
+def update_uber(uid, month, money, time, calories=0):
+	query = Query(Activity)
+	query.equal_to("uid", uid)
+	query.equal_to("start_time", month)
+	if query.count() == 0:
+		return false
+	else:
+		entry = query.first()
+		entry.increment("curr_money", money)
+		entry.increment("curr_time", time)
+		entry.increment("curr_cal", calories)
+		entry.increment("curr_ubers", 1)
+		return true
+
+def update_nouber(uid, month, money=0, time, calories):
+	query = Query(Activity)
+	query.equal_to("uid", uid)
+	query.equal_to("start_time", month)
+	if query.count() == 0:
+		return false
+	else:
+		entry = query.first()
+		entry.increment("curr_money", money)
+		entry.increment("curr_time", time)
+		entry.increment("curr_cal", calories)
+		return true
+
+
+Schedule = Object.extend("schedule")
+
+def add_schedule(uid, month, time, strategy):
+	query = Query(Schedule)
+	query.equal_to("uid", uid)
+	query.equal_to("month", month)
+	query.equal_to("time", time)
+	if query.count() != 0:
+		return false
+	else:
+		schedule = Schedule()
+		schedule.set("uid", uid)
+		schedule.set("month", month)
+		schedule.set("time", time)
+		schedule.set("strategy", strategy)
+		schedule.save()
+		return true
+
+
+def del_schedule(uid, month, time):
+	query = Query(Schedule)
+	query.equal_to("uid", uid)
+	query.equal_to("month", month)
+	query.equal_to("time", time)
+	if query.count == 0
+		return
+	else:
+		entry = query.first()
+		entry.destroy()
+
+
 
 
 
