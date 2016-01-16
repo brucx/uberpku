@@ -64,31 +64,11 @@ def oauth():
     credentials.get('redirect_url'),
     )
     session = auth_flow.get_session(request.url)
-    credential = session.oauth2credential
-    credential_data = {
-        'client_id': credential.client_id,
-        'redirect_url': credential.redirect_url,
-        'access_token': credential.access_token,
-        'expires_in_seconds': credential.expires_in_seconds,
-        'scopes': list(credential.scopes),
-        'grant_type': credential.grant_type,
-        'client_secret': credential.client_secret,
-        'refresh_token': credential.refresh_token,
-    }
-
-    with open(utils.STORAGE_FILENAME, 'w') as yaml_file:
-        yaml_file.write(safe_dump(credential_data, default_flow_style=False))
 
     client = UberRidesClient(session, sandbox_mode=True)
     response = client.get_user_profile()
     profile = response.json
 
     uuid = profile.get('uuid')
-    first_name = profile.get('first_name')
-    email = profile.get('email')
-    message = 'Hello, {}. Successfully granted access token to {}.'
-    message = message.format(first_name, email)
-    success_print(message)
 
-    body = request.url
     return render_template('oauth.html', uuid=uuid)
