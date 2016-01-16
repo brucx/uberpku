@@ -281,7 +281,7 @@ class AuthorizationCodeGrant(OAuth2):
             code=authorization_code,
             redirect_url=self.redirect_url,
         )
-
+        print(response.text)
         oauth2credential = OAuth2Credential.make_from_response(
             response=response,
             grant_type=auth.AUTHORIZATION_CODE_GRANT,

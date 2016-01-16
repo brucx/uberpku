@@ -86,7 +86,7 @@ def generate_prepared_request(method, url, headers, data, params, handlers):
         data=data,
         params=params,
     )
-
+    print(method,url,headers,data,params)
     handlers.append(error_handler)
 
     for handler in handlers:

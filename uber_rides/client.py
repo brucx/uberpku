@@ -55,8 +55,8 @@ VALID_PRODUCT_STATUS = frozenset([
     'completed',
 ])
 
-PRODUCTION_HOST = 'api.uber.com'
-SANDBOX_HOST = 'sandbox-api.uber.com'
+PRODUCTION_HOST = 'api.uber.com.cn'
+SANDBOX_HOST = 'sandbox-api.uber.com.cn'
 
 
 class UberRidesClient(object):
