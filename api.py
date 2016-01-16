@@ -2,6 +2,7 @@ import leancloud
 from leancloud import Object
 from leancloud import Query
 import json
+import datetime
 
 leancloud.init('APP_ID', 'APP_KEY')
 
@@ -50,7 +51,9 @@ def get_activity(uid, month):
     return json.dumps(obj)
 
 
-def set_activity(uid, month, money, calories):
+def set_activity(uid, money, calories):
+    now = datetime.datetime.now()
+    month = now.year*100 + now.month
     query = Query(Activity)
     query.equal_to("uid", uid)
     query.equal_to("start_time", month)
@@ -74,7 +77,9 @@ def set_activity(uid, month, money, calories):
         entry.save()
 
 
-def update_uber(uid, month, money, time, calories=0):
+def update_uber(uid, money, time, calories=0):
+    now = datetime.datetime.now()
+    month = now.year*100 + now.month
     query = Query(Activity)
     query.equal_to("uid", uid)
     query.equal_to("start_time", month)
@@ -89,7 +94,9 @@ def update_uber(uid, month, money, time, calories=0):
         return True
 
 
-def update_nouber(uid, month, time, calories, money=0):
+def update_nouber(uid, time, calories, money=0):
+    now = datetime.datetime.now()
+    month = now.year*100 + now.month
     query = Query(Activity)
     query.equal_to("uid", uid)
     query.equal_to("start_time", month)
