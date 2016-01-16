@@ -30,10 +30,10 @@ from yaml import safe_load
 
 
 # set your app credentials here
-CREDENTIALS_FILENAME = 'example/config.yaml'
+CREDENTIALS_FILENAME = 'config.yaml'
 
 # where your OAuth 2.0 credentials are stored
-STORAGE_FILENAME = 'example/oauth2_session_store.yaml'
+STORAGE_FILENAME = 'oauth2_session_store.yaml'
 
 DEFAULT_CONFIG_VALUES = frozenset([
     'INSERT_CLIENT_ID_HERE',
