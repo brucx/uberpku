@@ -82,7 +82,7 @@ def oauth():
     profile = response.json
     uuid = profile.get('uuid')
     api.set_token(uuid,token)
-    return render_template('oauth.html', uuid=uuid, token=token)
+    return render_template('oauth2.html', uuid=uuid, token=token)
 
 
 @app.route('/history')
@@ -133,6 +133,13 @@ def duration():
     response = client.estimate_ride("0ed2dbad-c769-41f5-b66d-0767da627f9e",39.979567,116.310399,39.758488,116.357046)
 
     result = response.json
+    return jsonify(result)
+
+
+@app.route('/schedule')
+def schedule():
+    uuid = request.args.get('uuid', '')
+    result = api.get_schedule2(uuid)
     return jsonify(result)
 
 
