@@ -175,8 +175,8 @@ def get_coords(uid, to_work):
         return False
 
 
-def set_schedule_from_history(uid, history):
-    _str = predict.predictionSchedule(history)
+def set_schedule_from_history(uid, history=0):
+    _str = predict.predictionSchedule(predict.expandTestData(predict.userHistory))
     for item in _str:
         start_long = item["start_long"]
         start_lat = item["start_lat"]
