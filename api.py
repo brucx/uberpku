@@ -169,6 +169,7 @@ def set_profile(uid, profile):
     query.equal_to("uid", uid)
     if query.count() == 0:
         entry = Profile()
+        entry.set("uid", uid)
         obj = {}
     else:
         entry = query.first()
@@ -176,7 +177,6 @@ def set_profile(uid, profile):
     for key in profile:
         obj[key] = profile[key]
     entry.set("profile",obj)
-    entry.set("uid", uid)
     entry.save()
 
 
