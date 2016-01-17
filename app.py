@@ -30,6 +30,7 @@ credentials = import_app_credentials()
 @app.after_request
 def add_header(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Header'] = 'Content-type'
     return response
 
 @app.route('/')
@@ -109,7 +110,7 @@ def plan():
 @app.route('/place', methods=["POST", "GET"])
 def place():
     if request.method == "POST":
-        obj = request.get_json(force=True)
+        obj = request.json
         uid = obj["uid"]
         name = obj["name"]
         latitude = obj["latitude"]
