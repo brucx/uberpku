@@ -48,15 +48,11 @@ def get_activity(uid, month):
         'curr_cal': entry.get("curr_cal"),
         'curr_time': entry.get("curr_time"),
         'curr_ubers': entry.get("curr_ubers"),
-        'home_lat': entry.get("home_lat"),
-        'home_long': entry.set("home_long"),
-        'work_lat': entry.set("work_lat"),
-        'work_long': entry.set("work_long")
     }
     return json.dumps(obj)
 
 
-def set_activity(uid, money, calories, home_lat, home_long, work_lat, work_long):
+def set_activity(uid, money, calories):
     now = datetime.datetime.now()
     month = now.year*100 + now.month
     query = Query(Activity)
@@ -73,10 +69,6 @@ def set_activity(uid, money, calories, home_lat, home_long, work_lat, work_long)
         entry.set("curr_cal", 0)
         entry.set("curr_time", 0)
         entry.set("curr_ubers", 0)
-        entry.set("home_lat", home_lat)
-        entry.set("home_long", home_long)
-        entry.set("work_lat", work_lat)
-        entry.set("work_long", work_long)
         # todo: duration, time!
         entry.save()
     else:
@@ -218,3 +210,30 @@ def get_schedule(uid, days, to_work):
                     }
                     _list.append(_str)
         return _list
+
+
+Profile = Object.extend("profile")
+
+
+def get_profile(uid):
+    query = Query(Profile)
+    query.equal_to("uid", uid)
+    entry = query.first()
+    obj = entry.get("profile")
+    return obj
+
+
+def set_profile(uid, profile):
+    query = Query(Profile)
+    query.equal_to("uid", uid)
+    if query.count() == 0:
+        entry = Profile()
+        entry.set("uid", uid)
+        obj = {}
+    else:
+        entry = query.first()
+        obj = entry.get("profile")
+    for key in profile:
+        obj[key] = profile[key]
+    entry.set("profile",obj)
+    entry.save()

@@ -5,3 +5,4 @@ redirect_url: "https://pkurider.leanapp.cn/oauth"
 scopes:
     - profile
     - history
+    - request

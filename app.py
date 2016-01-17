@@ -95,7 +95,8 @@ def plan():
         budget_money = request.form["budget_money"]
         budget_cal = request.form["budget_cal"]
 
-        #api.set_activity(uuid,"MONTH",budget_money,budget_cal)
+        api.set_activity(uuid,budget_money,budget_cal)
+        # api.
         return uuid+" " +budget_money+" "+budget_cal+"\n"
 
     else:
@@ -122,6 +123,36 @@ def duration():
     return jsonify(result)
 
 
+@app.route('/order', methods=["POST"])
+def order():
+    obj = request.json
+    uid = obj["uid"]
+    profile = api.get_profile(uid)
+    home = profile["home"]
+    work = profile["work"]
+    dest = obj["dest"]
+    if dest == "work":
+        direct = (
+            home["latitude"],
+            home["longitude"],
+            work["latitude"],
+            work["longitude"]
+        )
+    else:
+        direct = (
+            work["latitude"],
+            work["longitude"],
+            home["latitude"],
+            home["longitude"]
+        )
+    client = get_client_by_uid(uid)
+    response = client.get_price_estimates(*direct)
+    cars = response.json
+    print(jsonify(cars))
+    productid = cars["prices"][0]["product_id"]
+    response = client.request_ride(productid,*direct)
+    return jsonify(response.json)
+
 def get_client_by_uid(uid):
     token = api.get_token(uid)
     oauth2credential = OAuth2Credential(
@@ -135,5 +166,5 @@ def get_client_by_uid(uid):
         token.get("refresh_token"),
     )
     session = Session(oauth2credential=oauth2credential)
-    client = UberRidesClient(session)
+    client = UberRidesClient(session, sandbox_mode=True)
     return client
