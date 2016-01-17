@@ -47,11 +47,15 @@ def get_activity(uid, month):
         'curr_cal': entry.get("curr_cal"),
         'curr_time': entry.get("curr_time"),
         'curr_ubers': entry.get("curr_ubers"),
+        'home_lat': entry.get("home_lat"),
+        'home_long': entry.set("home_long"),
+        'work_lat': entry.set("work_lat"),
+        'work_long': entry.set("work_long")
     }
     return json.dumps(obj)
 
 
-def set_activity(uid, money, calories):
+def set_activity(uid, money, calories, home_lat, home_long, work_lat, work_long):
     now = datetime.datetime.now()
     month = now.year*100 + now.month
     query = Query(Activity)
@@ -68,6 +72,10 @@ def set_activity(uid, money, calories):
         entry.set("curr_cal", 0)
         entry.set("curr_time", 0)
         entry.set("curr_ubers", 0)
+        entry.set("home_lat", home_lat)
+        entry.set("home_long", home_long)
+        entry.set("work_lat", work_lat)
+        entry.set("work_long", work_long)
         # todo: duration, time!
         entry.save()
     else:
@@ -112,7 +120,7 @@ def update_nouber(uid, time, calories, money=0):
 Schedule = Object.extend("schedule")
 
 
-def add_schedule(uid, month, time, strategy, start, end):
+def add_schedule(uid, month, time, strategy, start_lat, start_long, end_lat, end_long):
     query = Query(Schedule)
     query.equal_to("uid", uid)
     query.equal_to("month", month)
@@ -125,8 +133,10 @@ def add_schedule(uid, month, time, strategy, start, end):
         schedule.set("month", month)
         schedule.set("time", time)
         schedule.set("strategy", strategy)
-        schedule.set("start", start)
-        schedule.set("end", end)
+        schedule.set("start_lat", start_lat)
+        schedule.set("start_long", start_long)
+        schedule.set("end_lat", end_lat)
+        schedule.set("end_long", end_long)
         schedule.save()
         return True
 
