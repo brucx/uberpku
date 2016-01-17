@@ -187,12 +187,12 @@ def set_schedule_from_history(uid, history):
         strategy = item["strategy"]
         to_work = item["to_work"]
         now = datetime.datetime.now()
-        add_schedule(uid, now.month,time, strategy, start_lat, start_long, end_lat, end_long, to_work)
+        add_schedule(uid, now.month, time, strategy, start_lat, start_long, end_lat, end_long, to_work)
 
 
 def get_schedule(uid, days, to_work):
     now = datetime.datetime.now()
-    month = now.month()
+    month = now.month
     query = Query(Schedule)
     query.equal_to("uid", uid)
     query.equal_to("month", month)
@@ -203,9 +203,9 @@ def get_schedule(uid, days, to_work):
         days_list = predict.ParseStrategyWhichDay(strategy)
         _list = list()
         if predict.ParseStrategyIsAvailable(strategy):
-            for i in range(1,days):
-                if (now.day() % 6 + i) not in days_list:
+            for i in range(1, days):
+                if (now.day % 6 + i) not in days_list:
                     pass
                 else:
-                    _list.append(now.day() % 6 + 1)
+                    _list.append(now.day % 6 + 1)
         return _list
