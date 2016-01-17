@@ -155,7 +155,9 @@ def del_schedule(uid, month, to_work):
         entry.destroy()
 
 
-def get_coords(uid, month, to_work):
+def get_coords(uid, to_work):
+    now = datetime.datetime.now()
+    month = now.year*100 + now.month
     query = Query(Schedule)
     query.equal_to("uid", uid)
     query.equal_to("month", month)
