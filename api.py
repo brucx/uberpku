@@ -36,7 +36,9 @@ def set_token(uid, token):
 Activity = Object.extend("activity")
 
 
-def get_activity(uid, month):
+def get_activity(uid):
+    now = datetime.datetime.now()
+    month = now.year*100 + now.month
     query = Query(Activity)
     query.equal_to("uid", uid)
     query.equal_to("start_time", month)
@@ -50,7 +52,7 @@ def get_activity(uid, month):
         'curr_time': entry.get("curr_time"),
         'curr_ubers': entry.get("curr_ubers"),
     }
-    return json.dumps(obj)
+    return obj
 
 
 def set_activity(uid, money, calories, est_price):
