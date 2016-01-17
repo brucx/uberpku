@@ -3,6 +3,7 @@ from leancloud import Object
 from leancloud import Query
 import json
 import datetime
+import predict
 
 leancloud.init('APP_ID', 'APP_KEY')
 
@@ -175,23 +176,36 @@ def get_coords(uid, to_work):
         return False
 
 
-def pseudo_schedule():
-    _str = [
-        {
-            "start_time": 0630,
-            "start_long": 37.77492950000001,
-            "start_lat": -122.31941550000008,
-            "end_long": 37.78492950000001,
-            "end_lat": -122.30941550000008,
-            "strategy": 111110011
-        },
-        {
-            "start_time": 1845,
-            "start_long": 37.78492950000001,
-            "start_lat": -122.30941550000008,
-            "end_long": 37.77492950000001,
-            "end_lat": -122.31941550000008,
-            "strategy": 111110011
-        }
-    ]
-    return json.dumps(_str)
+def set_schedule_from_history(uid, history):
+    _str = predict.predictionSchedule(history)
+    for item in _str:
+        start_long = item["start_long"]
+        start_lat = item["start_lat"]
+        end_long = item["end_long"]
+        end_lat = item["end_lat"]
+        time = item["start_time"]
+        strategy = item["strategy"]
+        to_work = item["to_work"]
+        now = datetime.datetime.now()
+        add_schedule(uid, now.month,time, strategy, start_lat, start_long, end_lat, end_long, to_work)
+
+
+def get_schedule(uid, days, to_work):
+    now = datetime.datetime.now()
+    month = now.month()
+    query = Query(Schedule)
+    query.equal_to("uid", uid)
+    query.equal_to("month", month)
+    query.equal_to("to_work", to_work)
+    if query.count != 0:
+        entry = query.first()
+        strategy = entry.get("strategy")
+        days_list = predict.ParseStrategyWhichDay(strategy)
+        _list = list()
+        if predict.ParseStrategyIsAvailable(strategy):
+            for i in range(1,days):
+                if (now.day() % 6 + i) not in days_list:
+                    pass
+                else:
+                    _list.append(now.day() % 6 + 1)
+        return _list

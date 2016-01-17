@@ -118,21 +118,38 @@ def predictionSchedule(historyJsonList):
 			,item[1]["latitude"]/item[1]["time"],item[1]["longitude"]/item[1]["time"]) < 20\
 			and abs(((home[1]["end_time"] - home[1]["start_time"])/home[1]["time"]) \
 				- (((item[1]["end_time"] - item[1]["start_time"])/item[1]["time"]))) < 10*60:
-			return	[{"starting":LocationToDic(home),\
-					"destination":LocationToDic(item),\
-					"start_time":home[1]["start_time"]/home[1]["time"],\
-					"strategy":0xCF800000},\
-					{"starting":LocationToDic(item),\
-					"destination":LocationToDic(home),\
-					"start_time":item[1]["start_time"]/item[1]["time"],\
-					"strategy":0xCF800000}]
+			return [
+                    {
+                        "start_long": home[1]["longitude"]/home[1]["time"],
+                        "start_lat": home[1]["latitude"]/home[1]["time"],
+                        "end_long": item[1]["longitude"]/item[1]["time"],
+                        "end_lat": item[1]["latitude"]/item[1]["time"],
+					    "start_time": TimestampToHHMM(home[1]["start_time"]/home[1]["time"]),
+					    "strategy": 0xCF800000,
+                        "to_work": 0
+                    },
+					{
+                        "end_long": home[1]["longitude"]/home[1]["time"],
+                        "end_lat": home[1]["latitude"]/home[1]["time"],
+                        "start_long": item[1]["longitude"]/item[1]["time"],
+                        "start_lat": item[1]["latitude"]/item[1]["time"],
+					    "start_time":TimestampToHHMM(item[1]["start_time"]/item[1]["time"]),
+					    "strategy": 0xCF800000,
+                        "to_work": 1
+                    }
+                ]
 
-	return [{"starting":LocationToDic(home),\
-			"destination":None,\
-			"start_time":home[1]["start_time"]/home[1]["time"],
-			"strategy":0xCF800000}]
+	return [
+                {
+                        "start_long": home[1]["longitude"]/home[1]["time"],
+                        "start_lat": home[1]["latitude"]/home[1]["time"],
+					    "start_time": TimestampToHHMM(home[1]["start_time"]/home[1]["time"]),
+					    "strategy": 0xCF800000,
+                        "to_work": 0
+                }
+            ]
 
-pre = predictionSchedule(expandTestData(userHistory))
+# pre = predictionSchedule(expandTestData(userHistory))
 
 #有效性
 def ParseStrategyIsAvailable(strategy):
