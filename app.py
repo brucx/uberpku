@@ -109,7 +109,7 @@ def plan():
 @app.route('/place', methods=["POST", "GET"])
 def place():
     if request.method == "POST":
-        obj = request.json
+        obj = request.get_json(force=True)
         uid = obj["uid"]
         name = obj["name"]
         latitude = obj["latitude"]
