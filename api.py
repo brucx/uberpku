@@ -229,16 +229,16 @@ def get_schedule(uid, days, to_work):
     return _list
 
 
-def get_schedule(uid):
+def get_schedule2(uid):
     result0 = get_schedule(uid, 3, 0)
     result1 = get_schedule(uid, 3, 1)
     _list = list()
-    list.append(result0[0])
-    list.append(result1[0])
-    list.append(result0[1])
-    list.append(result1[1])
-    list.append(result0[2])
-    list.append(result1[2])
+    _list.append(result0[0])
+    _list.append(result1[0])
+    _list.append(result0[1])
+    _list.append(result1[1])
+    _list.append(result0[2])
+    _list.append(result1[2])
     return _list
 
 
