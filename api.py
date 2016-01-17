@@ -189,11 +189,11 @@ def get_schedule(uid, days, to_work):
     query.equal_to("uid", uid)
     query.equal_to("month", month)
     query.equal_to("to_work", to_work)
+    _list = list()
     if query.count != 0:
         entry = query.first()
         strategy = entry.get("strategy")
         days_list = predict.ParseStrategyWhichDay(strategy)
-        _list = list()
         if predict.ParseStrategyIsAvailable(strategy):
             for i in range(1, days):
                 if (now.day % 6 + i) not in days_list:
@@ -209,7 +209,7 @@ def get_schedule(uid, days, to_work):
                         "days_from_now": i
                     }
                     _list.append(_str)
-        return _list
+    return _list
 
 
 Profile = Object.extend("profile")
