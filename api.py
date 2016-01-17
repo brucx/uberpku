@@ -191,18 +191,19 @@ def set_schedule_from_history(uid, history=0):
 
 def get_schedule(uid, days, to_work):
     now = datetime.datetime.now()
-    month = now.month
+    # month = now.month
     query = Query(Schedule)
+    print uid
     query.equal_to("uid", uid)
-    query.equal_to("month", month)
-    query.equal_to("to_work", to_work)
+    # query.equal_to("month", month)
+    # query.equal_to("to_work", to_work)
     _list = list()
     if query.count != 0:
         entry = query.first()
         strategy = entry.get("strategy")
         days_list = predict.ParseStrategyWhichDay(strategy)
         if predict.ParseStrategyIsAvailable(strategy):
-            for i in range(1, days):
+            for i in range(0, days):
                 if (now.day % 6 + i) not in days_list:
                     _str = {
                         "start_long": entry.get("start_long"),
@@ -270,4 +271,4 @@ def set_profile(uid, profile):
 
 
 if __name__ == "__main__":
-    set_schedule_from_history(uid="2222", history=0)
+    set_schedule_from_history(uid="62fcbc5b-791d-46b1-b9f3-72f1b456ce84", history=0)

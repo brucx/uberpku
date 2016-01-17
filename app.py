@@ -18,7 +18,7 @@ from flask import Flask, request, redirect, render_template, jsonify
 
 from views.todos import todos_view
 
-import api
+import api, json
 
 app = Flask(__name__)
 
@@ -138,9 +138,9 @@ def duration():
 
 @app.route('/schedule')
 def schedule():
-    uuid = request.args.get('uuid', '')
+    uuid = request.args.get('uid', '')
     result = api.get_schedule2(uuid)
-    return jsonify(result)
+    return json.dumps(result)
 
 
 @app.route('/order', methods=["POST"])
