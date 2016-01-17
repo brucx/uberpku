@@ -4,7 +4,7 @@ from leancloud import Query
 import json
 import datetime
 
-leancloud.init('APP_ID', 'APP_KEY')
+leancloud.init('do4K7UeJcyGgwQ5mdeW4ep07-gzGzoHsz', '5bv5WWc0LuplJbEoadg4TmLH')
 
 User = Object.extend("user")
 
@@ -151,3 +151,41 @@ def del_schedule(uid, month, time):
     else:
         entry = query.first()
         entry.destroy()
+
+
+Profile = Object.extend("profile")
+
+
+def get_profile(uid):
+    query = Query(Profile)
+    query.equal_to("uid", uid)
+    entry = query.first()
+    obj = entry.get("profile")
+    return obj
+
+
+def set_profile(uid, profile):
+    query = Query(Profile)
+    query.equal_to("uid", uid)
+    if query.count() == 0:
+        entry = Profile()
+        obj = {}
+    else:
+        entry = query.first()
+        obj = entry.get("profile")
+    for key in profile:
+        obj[key] = profile[key]
+    entry.set("profile",obj)
+    entry.set("uid", uid)
+    entry.save()
+
+
+# test
+if __name__ == "__main__":
+    uid = datetime.datetime.now().isoformat()
+    set_profile(uid, {"a":1, "b":2, "c":3})
+    obj = get_profile(uid)
+    print(obj)
+    set_profile(uid, {"a":2, "d":4, "c":3})
+    obj = get_profile(uid)
+    print(obj)
