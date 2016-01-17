@@ -14,7 +14,7 @@ from uber_rides.session import Session, OAuth2Credential
 
 from datetime import datetime
 
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, jsonify
 
 from views.todos import todos_view
 
@@ -84,7 +84,7 @@ def history():
     client = get_client_by_uid(uuid)
     response = client.get_user_activity()
     reslut = response.json
-    return str(reslut)
+    return jsonify(reslut)
 
 
 @app.route('/plan', methods=["POST", "GET"])
@@ -99,6 +99,27 @@ def plan():
 
     else:
         return "GET /plan under construction"
+
+
+@app.route('/price')
+def price():
+    uuid = request.args.get('uuid', '')
+    client = get_client_by_uid(uuid)
+    response = client.get_price_estimates(39.979567,116.310399,39.758488,116.357046)
+
+    result = response.json
+    return jsonify(result)
+
+
+@app.route('/duration')
+def duration():
+    uuid = request.args.get('uuid', '')
+    client = get_client_by_uid(uuid)
+    response = client.estimate_ride("0ed2dbad-c769-41f5-b66d-0767da627f9e",39.979567,116.310399,39.758488,116.357046)
+
+    result = response.json
+    return jsonify(result)
+
 
 def get_client_by_uid(uid):
     token = api.get_token(uid)
