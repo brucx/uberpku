@@ -91,17 +91,24 @@ def history():
 @app.route('/plan', methods=["POST", "GET"])
 def plan():
     if request.method == "POST":
-        uuid = request.form["uid"]
-        budget_money = request.form["budget_money"]
-        budget_cal = request.form["budget_cal"]
-
-        api.set_activity(uuid,budget_money,budget_cal)
-        # api.
-        return uuid+" " +budget_money+" "+budget_cal+"\n"
-
+        obj = request.json
+        uid = obj["uid"]
+        budget_money = obj["budget_money"]
+        budget_cal = obj["budget_cal"]
+        est_price = 45
+        api.set_activity(uid,budget_money,budget_cal,est_price)
     else:
-        return "GET /plan under construction"
+        uid = request.args.get('uid', '')
 
+    obj = api.get_activity(uid)
+    return jsonify({
+            "budget_money": obj["budget_money"],
+            "budget_cal": obj["budget_cal"],
+            "curr_money": obj["curr_money"],
+            "curr_ubers": obj["curr_ubers"],
+            "curr_cal": obj["curr_cal"],
+            "curr_time": obj["curr_time"],
+        })
 
 @app.route('/price')
 def price():
