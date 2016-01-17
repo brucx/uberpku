@@ -101,6 +101,31 @@ def plan():
         return "GET /plan under construction"
 
 
+@app.route('/place', methods=["POST", "GET"])
+def place():
+    if request.method == "POST":
+        obj = request.json
+        uid = obj["uid"]
+        name = obj["name"]
+        latitude = obj["latitude"]
+        longitude = obj["longitude"]
+        api.set_profile(uid,{name:{"latitude":latitude, "longitude":longitude}})
+        return ''
+
+    else:
+        uid = request.args.get('uid', '')
+        name = request.args.get('name', '')
+        obj = api.get_profile(uid)
+        latitude = obj[name]["latitude"]
+        longitude = obj[name]["longitude"]
+
+        return jsonify({
+             "name": name,
+             "latitude": latitude,
+             "longitude": longitude
+        })
+
+
 @app.route('/price')
 def price():
     uuid = request.args.get('uuid', '')
