@@ -151,3 +151,25 @@ def del_schedule(uid, month, time):
     else:
         entry = query.first()
         entry.destroy()
+
+
+def pseudo_schedule():
+    _str = [
+        {
+            "start_time": 0630,
+            "start_long": 37.77492950000001,
+            "start_lat": -122.31941550000008,
+            "end_long": 37.78492950000001,
+            "end_lat": -122.30941550000008,
+            "strategy":111110011
+        },
+        {
+            "start_time": 1845,
+            "start_long": 37.78492950000001,
+            "start_lat": -122.30941550000008,
+            "end_long": 37.77492950000001,
+            "end_lat": -122.31941550000008,
+            "strategy":111110011
+        }
+    ]
+    return json.dumps(_str)
