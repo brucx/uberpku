@@ -5,7 +5,7 @@ import json
 import datetime
 import predict
 
-leancloud.init('APP_ID', 'APP_KEY')
+leancloud.init('do4K7UeJcyGgwQ5mdeW4ep07-gzGzoHsz', '5bv5WWc0LuplJbEoadg4TmLH')
 
 User = Object.extend("user")
 
@@ -267,3 +267,7 @@ def set_profile(uid, profile):
         obj[key] = profile[key]
     entry.set("profile", obj)
     entry.save()
+
+
+if __name__ == "__main__":
+    set_schedule_from_history(uid="2222", history=0)
