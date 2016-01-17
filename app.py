@@ -27,6 +27,12 @@ app.register_blueprint(todos_view, url_prefix='/todos')
 credentials = import_app_credentials()
 
 
+@app.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-type'
+    return response
+
 
 @app.route('/')
 def index():
