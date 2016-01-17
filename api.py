@@ -207,5 +207,14 @@ def get_schedule(uid, days, to_work):
                 if (now.day % 6 + i) not in days_list:
                     pass
                 else:
-                    _list.append(now.day % 6 + 1)
+                    _str = {
+                        "start_long": entry.get("start_long"),
+                        "start_lat": entry.get("start_lat"),
+                        "end_long": entry.get("end_long"),
+                        "end_lat": entry.get("end_lat"),
+                        "time": entry.get("start_time"),
+                        "to_work": entry.get("to_work"),
+                        "days_from_now": i
+                    }
+                    _list.append(_str)
         return _list
