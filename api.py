@@ -120,11 +120,12 @@ def update_nouber(uid, time, calories, money=0):
 Schedule = Object.extend("schedule")
 
 
-def add_schedule(uid, month, time, strategy, start_lat, start_long, end_lat, end_long):
+# to_work: 0 - home to work, 1 - work to home
+def add_schedule(uid, month, time, strategy, start_lat, start_long, end_lat, end_long, to_work):
     query = Query(Schedule)
     query.equal_to("uid", uid)
     query.equal_to("month", month)
-    query.equal_to("time", time)
+    query.equal_to("to_work", to_work)
     if query.count() != 0:
         return False
     else:
@@ -137,20 +138,39 @@ def add_schedule(uid, month, time, strategy, start_lat, start_long, end_lat, end
         schedule.set("start_long", start_long)
         schedule.set("end_lat", end_lat)
         schedule.set("end_long", end_long)
+        query.equal_to("to_work", to_work)
         schedule.save()
         return True
 
 
-def del_schedule(uid, month, time):
+def del_schedule(uid, month, to_work):
     query = Query(Schedule)
     query.equal_to("uid", uid)
     query.equal_to("month", month)
-    query.equal_to("time", time)
+    query.equal_to("to_work", to_work)
     if query.count == 0:
         return
     else:
         entry = query.first()
         entry.destroy()
+
+
+def get_coords(uid, month, to_work):
+    query = Query(Schedule)
+    query.equal_to("uid", uid)
+    query.equal_to("month", month)
+    query.equal_to("to_work", to_work)
+    if query.count != 0:
+        entry = query.first()
+        _str = {
+            "start_long": entry.get("start_long"),
+            "start_lat": entry.get("start_lat"),
+            "end_long": entry.get("end_long"),
+            "end_lat": entry.get("end_lat"),
+        }
+        return json.dumps(_str)
+    else:
+        return False
 
 
 def pseudo_schedule():
@@ -161,7 +181,7 @@ def pseudo_schedule():
             "start_lat": -122.31941550000008,
             "end_long": 37.78492950000001,
             "end_lat": -122.30941550000008,
-            "strategy":111110011
+            "strategy": 111110011
         },
         {
             "start_time": 1845,
@@ -169,7 +189,7 @@ def pseudo_schedule():
             "start_lat": -122.30941550000008,
             "end_long": 37.77492950000001,
             "end_lat": -122.31941550000008,
-            "strategy":111110011
+            "strategy": 111110011
         }
     ]
     return json.dumps(_str)
