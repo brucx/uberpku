@@ -202,7 +202,16 @@ def get_schedule(uid, days, to_work):
         if predict.ParseStrategyIsAvailable(strategy):
             for i in range(1, days):
                 if (now.day % 6 + i) not in days_list:
-                    pass
+                    _str = {
+                        "start_long": entry.get("start_long"),
+                        "start_lat": entry.get("start_lat"),
+                        "end_long": entry.get("end_long"),
+                        "end_lat": entry.get("end_lat"),
+                        "time": entry.get("start_time"),
+                        "to_work": entry.get("to_work"),
+                        "days_from_now": i,
+                        "uber": 0
+                    }
                 else:
                     _str = {
                         "start_long": entry.get("start_long"),
@@ -211,9 +220,23 @@ def get_schedule(uid, days, to_work):
                         "end_lat": entry.get("end_lat"),
                         "time": entry.get("start_time"),
                         "to_work": entry.get("to_work"),
-                        "days_from_now": i
+                        "days_from_now": i,
+                        "uber": 1
                     }
-                    _list.append(_str)
+                _list.append(_str)
+    return _list
+
+
+def get_schedule(uid):
+    result0 = get_schedule(uid, 3, 0)
+    result1 = get_schedule(uid, 3, 1)
+    _list = list()
+    list.append(result0[0])
+    list.append(result1[0])
+    list.append(result0[1])
+    list.append(result1[1])
+    list.append(result0[2])
+    list.append(result1[2])
     return _list
 
 
